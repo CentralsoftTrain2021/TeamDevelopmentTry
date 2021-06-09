@@ -1,8 +1,6 @@
 package web;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,9 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.Tashizan;
-import dao.DBUtil;
-import dao.EmployeesDao;
 import dao.EmployeesVo;
+import service.EmployeesService;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	protected void doPost(
@@ -28,7 +25,9 @@ public class LoginServlet extends HttpServlet {
 
 		int id = Integer.parseInt(idStr);
 
-		EmployeesVo  emp = getEmployeesVo( id );
+		EmployeesService service = new EmployeesService();
+		
+		EmployeesVo  emp = service.getEmployeesVo( id );
 
 		request.getSession().setAttribute("EmployeesVo", emp);
 
@@ -43,30 +42,6 @@ public class LoginServlet extends HttpServlet {
 
 	}
 
-	//DBから従業員を取得する
-	private static EmployeesVo getEmployeesVo( int id )
-	{
-		EmployeesVo emp = null;
-		DBUtil dbUtil = new  DBUtil();
-
-		//コネクションを取得
-		try( Connection  con = dbUtil.getConection(); )
-		{
-			EmployeesDao edao = new EmployeesDao( con );
-
-			//DBから従業員を取得
-			emp = edao.getEmployee( id );
-
-			//取得したデータを表示する
-			System.out.println( emp );
-
-		}
-		catch( SQLException e )
-		{
-			throw new RuntimeException( e );//ランタイム例外に載せ替えて再スロー
-		}
-
-		return emp;
-	}
+	
 
 }

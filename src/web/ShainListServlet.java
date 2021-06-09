@@ -1,8 +1,6 @@
 package web;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ShainListBean;
-import dao.DBUtil;
-import dao.EmployeesDao;
 import dao.EmployeesVo;
+import service.EmployeesService;
 
 @WebServlet("/ShainListServlet")
 public class ShainListServlet extends HttpServlet {
@@ -25,8 +22,9 @@ public class ShainListServlet extends HttpServlet {
 			HttpServletResponse response
 			) throws ServletException, IOException
 	{
-
-		List<EmployeesVo>  shainList = getEmployeesVoList();
+		
+		EmployeesService service = new EmployeesService();
+		List<EmployeesVo>  shainList = service.getEmployeesVoList();
 
 		ShainListBean bean = new ShainListBean();
 
@@ -42,31 +40,7 @@ public class ShainListServlet extends HttpServlet {
 		disp.forward(request, response);
 	}
 
-	//DBから従業員を取得する
-	private static List<EmployeesVo> getEmployeesVoList()
-	{
-		List<EmployeesVo> empList = null;
-		DBUtil dbUtil = new  DBUtil();
-
-		//コネクションを取得
-		try( Connection  con = dbUtil.getConection(); )
-		{
-			EmployeesDao edao = new EmployeesDao( con );
-
-			//DBから従業員を取得
-			empList = edao.getEmployeelist();
-
-			//取得したデータを表示する
-			//System.out.println( emp );
-
-		}
-		catch( SQLException e )
-		{
-			throw new RuntimeException( e );//ランタイム例外に載せ替えて再スロー
-		}
-
-		return empList;
-	}
+	
 
 
 }

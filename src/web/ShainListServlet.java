@@ -1,6 +1,7 @@
 package web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.ShainListBean;
 import dao.EmployeesVo;
-import service.EmployeesService;
 
 @WebServlet("/ShainListServlet")
 public class ShainListServlet extends HttpServlet {
@@ -22,9 +22,11 @@ public class ShainListServlet extends HttpServlet {
 			HttpServletResponse response
 			) throws ServletException, IOException
 	{
-		
-		EmployeesService service = new EmployeesService();
-		List<EmployeesVo>  shainList = service.getEmployeesVoList();
+
+		//EmployeesService service = new EmployeesService();
+		//List<EmployeesVo>  shainList = service.getEmployeesVoList();
+
+		List<EmployeesVo>  shainList  =new ArrayList<EmployeesVo>();
 
 		ShainListBean bean = new ShainListBean();
 
@@ -40,7 +42,7 @@ public class ShainListServlet extends HttpServlet {
 		disp.forward(request, response);
 	}
 
-	
+
 
 
 }

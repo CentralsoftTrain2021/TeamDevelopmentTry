@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.Tashizan;
 import dao.EmployeesVo;
-import service.EmployeesService;
+
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	protected void doPost(
@@ -25,10 +25,11 @@ public class LoginServlet extends HttpServlet {
 
 		int id = Integer.parseInt(idStr);
 
-		EmployeesService service = new EmployeesService();
-		
-		EmployeesVo  emp = service.getEmployeesVo( id );
+		//EmployeesService service = new EmployeesService();
 
+		//EmployeesVo  emp = service.getEmployeesVo( id );
+		EmployeesVo  emp = new EmployeesVo();
+		emp.setEmployeename("hayashi");
 		request.getSession().setAttribute("EmployeesVo", emp);
 
 		Tashizan bean = new Tashizan();
@@ -42,6 +43,6 @@ public class LoginServlet extends HttpServlet {
 
 	}
 
-	
+
 
 }

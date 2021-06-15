@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 
 		EmployeesVo  emp = service.getEmployeesVo( id );
 		//EmployeesVo  emp = new EmployeesVo();
-		emp.setEmployeename("hayashi");
+		//emp.setEmployeename("hayashi");
 		request.getSession().setAttribute("EmployeesVo", emp);
 
 		Tashizan bean = new Tashizan();
